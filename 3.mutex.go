@@ -13,11 +13,11 @@ type bb struct {
 // waitGroup 是要讓等全部有被登記數量(wg.Add)的事件完成後（wg.Done），才會結束程式運行
 // 兩個都需要
 func (a *bb) updateMsg(s string, m *sync.Mutex, w *sync.WaitGroup) {
+	defer w.Done()
 	m.Lock()
 	a.msg = s
 
 	m.Unlock()
-	defer w.Done()
 }
 
 // 這樣會有 race condition 產生， go run -race .，可以偵測出來
