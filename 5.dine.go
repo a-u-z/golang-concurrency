@@ -25,10 +25,14 @@ var philosophers = []PhilosopherAndForks{
 var eatRound = 3                     // how many times a philosopher eats
 var eatTime = 500 * time.Millisecond // how long it takes to eatTime
 var thinkTime = 2 * time.Second      // how long a philosopher thinks
+var orderMutex sync.Mutex
+var orderSlice []string
 
 func dine() {
-	wg := &sync.WaitGroup{}
-	wg.Add(len(philosophers))
+	// 給 測試使用
+
+	philosopherWg := &sync.WaitGroup{}
+	philosopherWg.Add(len(philosophers))
 	// 這是因為到時候會讓每個哲學家都啟動吃東西 func 不過還是要等大家都坐好，才啟動吃東西程序
 	seated := &sync.WaitGroup{}
 	seated.Add(len(philosophers))
@@ -41,9 +45,10 @@ func dine() {
 
 	// 讓每一個哲學家都啟動吃東西程序
 	for i := 0; i < len(philosophers); i++ {
-		go seatAndEat(philosophers[i], wg, forks, seated)
+		go seatAndEat(philosophers[i], philosopherWg, forks, seated)
 	}
-	wg.Wait()
+
+	philosopherWg.Wait()
 }
 
 // seatAndEat is the function fired off as a goroutine for each of our philosophers. It takes one
@@ -83,6 +88,9 @@ func seatAndEat(philosopher PhilosopherAndForks, wg *sync.WaitGroup, forks map[i
 		forks[philosopher.rightFork].Unlock()
 		colorPrint(philosopher.name, fmt.Sprintf("\t%s put down the forks.\n", philosopher.name))
 	}
+	orderMutex.Lock()
+	orderSlice = append(orderSlice, philosopher.name)
+	orderMutex.Unlock()
 
 	fmt.Println(philosopher.name, "is done.")
 }
