@@ -3,5 +3,6 @@ package main
 func main() {
 	// mutexPractice()
 
-	shoutGame()
+	// shoutGame()
+	selectPractice()
 }
