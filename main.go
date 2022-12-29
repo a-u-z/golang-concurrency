@@ -5,5 +5,7 @@ func main() {
 
 	// shoutGame()
 	// selectPractice()
-	channelLength()
+	// channelLength()
+
+	barberMain()
 }
