@@ -7,5 +7,6 @@ func main() {
 	// selectPractice()
 	// channelLength()
 
-	barberMain()
+	// barberMain()
+	carAssembly()
 }

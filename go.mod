@@ -4,6 +4,7 @@ go 1.19
 
 require (
 	github.com/fatih/color v1.13.0
+	github.com/iloveanimal/cutedog v0.0.15
 	github.com/stretchr/testify v1.8.1
 )
 
