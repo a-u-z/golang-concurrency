@@ -8,5 +8,7 @@ func main() {
 	// channelLength()
 
 	// barberMain()
-	carAssembly()
+	// carAssembly()
+
+	Practice()
 }
